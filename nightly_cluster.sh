@@ -6,12 +6,14 @@ if [ -z ${API_KEY} ];then
     exit 1
 fi
 
+if ! [ -x "$(command -v ibmcloud)" ]; then
+  echo 'Error: ibmcloud is not installed.' >&2
+  exit 1
+fi
+
 export PATH=${PATH}:${HOME}/local/bin/
-echo which ibmcloud
-which ibmcloud
 
 ibmcloud login --apikey ${API_KEY} -a https://api.us-east.bluemix.net
-
 
 echo "Performing nightly cluster-rebuild"
 date=$(date +%F)
